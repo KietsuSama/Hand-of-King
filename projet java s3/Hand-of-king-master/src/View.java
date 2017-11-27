@@ -18,6 +18,7 @@ public class View extends JFrame {
        JButton pseudoJ1 = new JButton();
        JButton pseudoJ2 = new JButton();
        JButton[] plateau;
+       int style;
 
        ControlButton cb;
        ArrayList<Carte> tous = new ArrayList<Carte>();
@@ -26,7 +27,8 @@ public class View extends JFrame {
 
 
 
-       public View(Controller mod){
+       public View(Controller mod, int i){
+              style = i;
               this.mod=mod;
               cb  = new ControlButton(this,mod);
               initAttribut();
@@ -49,7 +51,11 @@ public class View extends JFrame {
 
        public void vueCapture(int depart,int cible ){
               plateau[cible].setIcon(plateau[depart].getIcon());
-              plateau[depart].setIcon(new ImageIcon("pokémon/pokeball.gif"));//la methode sera a modifier pour implementer la prise multiple
+              if (style == 1) {
+                     plateau[depart].setIcon(new ImageIcon("pokémon/pokeball.gif"));//la methode sera a modifier pour implementer la prise multiple
+              } else if (style == 2){
+                     plateau[depart].setIcon(new ImageIcon("theme_mort/kill.png"));//la methode sera a modifier pour implementer la prise multiple
+              }
               setVisible(true);
        }
        public void pDeplacement(int depart,int cible){
@@ -68,6 +74,9 @@ public class View extends JFrame {
                      plateau[i]= new JButton();
                      plateau[i].setPreferredSize(new Dimension(100,100));
                      plateau[i].setBackground(Color.white);
+                     if (style == 2){
+                            plateau[i].setBackground(Color.decode("#9805d4"));
+                     }
               }
 
               setVisible(true);
@@ -104,16 +113,27 @@ public class View extends JFrame {
                      pan1.add(plateau[i]);
                      plateau[i].addActionListener(cb);
               }
-              cimetierre.setIcon(new ImageIcon("pokémon/plateau.png"));
-              cimetierre1.setIcon(new ImageIcon("pokémon/plateau1.png"));
-              cimetierre2.setIcon(new ImageIcon("pokémon/plateau2.png"));
-              cimetierre3.setIcon(new ImageIcon("pokémon/plateau3.png"));
+              if (style == 1) {
+                     cimetierre.setIcon(new ImageIcon("pokémon/plateau.png"));
+                     cimetierre1.setIcon(new ImageIcon("pokémon/plateau1.png"));
+                     cimetierre2.setIcon(new ImageIcon("pokémon/plateau2.png"));
+                     cimetierre3.setIcon(new ImageIcon("pokémon/plateau3.png"));
 
-              imageJ1.setIcon(new ImageIcon("pokémon/pseudo.jpeg"));
-              imageJ2.setIcon(new ImageIcon("pokémon/pseudo.jpeg"));
-              pseudoJ1.setIcon(new ImageIcon("pokémon/pseudo.jpeg"));
-              pseudoJ2.setIcon(new ImageIcon("pokémon/pseudo.jpeg"));
+                     imageJ1.setIcon(new ImageIcon("pokémon/pseudo.jpeg"));
+                     imageJ2.setIcon(new ImageIcon("pokémon/pseudo.jpeg"));
+                     pseudoJ1.setIcon(new ImageIcon("pokémon/pseudo.jpeg"));
+                     pseudoJ2.setIcon(new ImageIcon("pokémon/pseudo.jpeg"));
+              } else if (style == 2){
+                     cimetierre.setIcon(new ImageIcon("theme_mort/plateau.png"));
+                     cimetierre1.setIcon(new ImageIcon("theme_mort/plateau1.png"));
+                     cimetierre2.setIcon(new ImageIcon("theme_mort/plateau2.png"));
+                     cimetierre3.setIcon(new ImageIcon("theme_mort/plateau3.png"));
 
+                     imageJ1.setIcon(new ImageIcon("pokémon/pseudo.jpeg"));
+                     imageJ2.setIcon(new ImageIcon("pokémon/pseudo.jpeg"));
+                     pseudoJ1.setIcon(new ImageIcon("pokémon/pseudo.jpeg"));
+                     pseudoJ2.setIcon(new ImageIcon("pokémon/pseudo.jpeg"));
+              }
 
               pan2.add(cimetierre);
               pan3.add(cimetierre1);
@@ -142,6 +162,10 @@ public class View extends JFrame {
 
 
        public void capture_multiple(int id) {
-              plateau[id].setIcon(new ImageIcon("pokémon/pokeball.gif"));
+              if (style == 1) {
+                     plateau[id].setIcon(new ImageIcon("pokémon/pokeball.gif"));//la methode sera a modifier pour implementer la prise multiple
+              } else if (style == 2){
+                     plateau[id].setIcon(new ImageIcon("theme_mort/kill.png"));//la methode sera a modifier pour implementer la prise multiple
+              }
        }
 }

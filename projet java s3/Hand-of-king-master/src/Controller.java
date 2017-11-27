@@ -15,11 +15,15 @@ public class Controller {
     ArrayList<CarteCompagnon> compagnons_set =new ArrayList<CarteCompagnon>();
     int joueurActif = 0; // 0 ou 1
     Carte[] plateau = new Carte[36];
-    private int style = 1;
+    private int style;
     boolean debut = true;
 
 
     public Controller(){}
+
+    public void initStyle(int i){
+        style = i;
+    }
 
     public Carte[] getPlateau() {
         return plateau;
@@ -46,6 +50,21 @@ public class Controller {
             Famille f6 = new Famille("Plante", 7);
             this.liste_famille.add(f6);
             Famille f7 = new Famille("Eau", 8);
+            this.liste_famille.add(f7);
+        } else if (style == 2){
+            Famille f1 = new Famille("blanc", 2);
+            this.liste_famille.add(f1);
+            Famille f2 = new Famille("vert", 3);
+            this.liste_famille.add(f2);
+            Famille f3 = new Famille("sans", 4);
+            this.liste_famille.add(f3);
+            Famille f4 = new Famille("rouge", 5);
+            this.liste_famille.add(f4);
+            Famille f5 = new Famille("black", 6);
+            this.liste_famille.add(f5);
+            Famille f6 = new Famille("blond", 7);
+            this.liste_famille.add(f6);
+            Famille f7 = new Famille("brun", 8);
             this.liste_famille.add(f7);
         }
         return liste_famille;
@@ -144,6 +163,100 @@ public class Controller {
             this.jeu.add_Carte(p33,33);
             this.jeu.add_Carte(p34,34);
             this.jeu.add_Carte(p35,35);
+
+
+        } else if (style == 2){
+            System.out.println("famille");
+
+            //pion deplacable
+            Carte p0 = new Carte("Mort", null , "theme_mort/36_burned.png");
+            p0.setBoolean_deplacement(true);
+            this.jeu.add_Carte(p0, 0);
+
+            //membre de la premiere famille
+            Carte p1 = new Carte("blanc1", this.liste_famille.get(0), "theme_mort/1_burned.png");
+            Carte p2 = new Carte("blanc2", this.liste_famille.get(0), "theme_mort/2_burned.png");
+            this.jeu.add_Carte(p1, 1);
+            this.jeu.add_Carte(p2, 2);
+
+            //membre de la deuxieme famille
+            Carte p3 = new Carte("vert1", this.liste_famille.get(1), "theme_mort/25_burned.png");
+            Carte p4 = new Carte("vert2", this.liste_famille.get(1), "theme_mort/26_burned.png");
+            Carte p5 = new Carte("vert3", this.liste_famille.get(1), "theme_mort/27_burned.png");
+            this.jeu.add_Carte(p3,3);
+            this.jeu.add_Carte(p4,4);
+            this.jeu.add_Carte(p5,5);
+
+            //membre de la troisieme famille
+            Carte p6 = new Carte("chauve1", this.liste_famille.get(2), "theme_mort/3_burned.png");
+            Carte p7 = new Carte("chauve2", this.liste_famille.get(2), "theme_mort/4_burned.png");
+            Carte p8 = new Carte("chauve3", this.liste_famille.get(2), "theme_mort/5_burned.png");
+            Carte p9 = new Carte("chauve4", this.liste_famille.get(2), "theme_mort/24_burned.png");
+            this.jeu.add_Carte(p6,6);
+            this.jeu.add_Carte(p7,7);
+            this.jeu.add_Carte(p8,8);
+            this.jeu.add_Carte(p9,9);
+
+            //membre de la quatrieme famille
+            Carte p10 = new Carte("roux1", this.liste_famille.get(3), "theme_mort/6_burned.png");
+            Carte p11 = new Carte("roux2", this.liste_famille.get(3), "theme_mort/7_burned.png");
+            Carte p12 = new Carte("roux3", this.liste_famille.get(3), "theme_mort/8_burned.png");
+            Carte p13 = new Carte("roux4", this.liste_famille.get(3), "theme_mort/9_burned.png");
+            Carte p14 = new Carte("roux5", this.liste_famille.get(3), "theme_mort/23_burned.png");
+            this.jeu.add_Carte(p10,10);
+            this.jeu.add_Carte(p11,11);
+            this.jeu.add_Carte(p12,12);
+            this.jeu.add_Carte(p13,13);
+            this.jeu.add_Carte(p14,14);
+
+            //membre de la cinquieme famille
+            Carte p15 = new Carte("black1", this.liste_famille.get(4), "theme_mort/10_burned.png");
+            Carte p16 = new Carte("black2", this.liste_famille.get(4), "theme_mort/11_burned.png");
+            Carte p17 = new Carte("black3", this.liste_famille.get(4), "theme_mort/12_burned.png");
+            Carte p18 = new Carte("black4", this.liste_famille.get(4), "theme_mort/13_burned.png");
+            Carte p19 = new Carte("black5", this.liste_famille.get(4), "theme_mort/14_burned.png");
+            Carte p20 = new Carte("black6", this.liste_famille.get(4), "theme_mort/22_burned.png");
+            this.jeu.add_Carte(p15,15);
+            this.jeu.add_Carte(p16,16);
+            this.jeu.add_Carte(p17,17);
+            this.jeu.add_Carte(p18,18);
+            this.jeu.add_Carte(p19,19);
+            this.jeu.add_Carte(p20,20);
+
+            //membre de la sixieme famille
+            Carte p21 = new Carte("blond1", this.liste_famille.get(5), "theme_mort/15_burned.png");
+            Carte p22 = new Carte("blond2", this.liste_famille.get(5), "theme_mort/16_burned.png");
+            Carte p23 = new Carte("blond3", this.liste_famille.get(5), "theme_mort/17_burned.png");
+            Carte p24 = new Carte("blond4", this.liste_famille.get(5), "theme_mort/18_burned.png");
+            Carte p25 = new Carte("blond5", this.liste_famille.get(5), "theme_mort/19_burned.png");
+            Carte p26 = new Carte("blond6", this.liste_famille.get(5), "theme_mort/20_burned.png");
+            Carte p27 = new Carte("blond7", this.liste_famille.get(5), "theme_mort/21_burned.png");
+            this.jeu.add_Carte(p21,21);
+            this.jeu.add_Carte(p22,22);
+            this.jeu.add_Carte(p23,23);
+            this.jeu.add_Carte(p24,24);
+            this.jeu.add_Carte(p25,25);
+            this.jeu.add_Carte(p26,26);
+            this.jeu.add_Carte(p27,27);
+
+            //membre de la septiemme famille
+            Carte p28 = new Carte("brun1", this.liste_famille.get(6), "theme_mort/28_burned.png");
+            Carte p29 = new Carte("brun2", this.liste_famille.get(6), "theme_mort/29_burned.png");
+            Carte p30 = new Carte("brun3", this.liste_famille.get(6), "theme_mort/30_burned.png");
+            Carte p31 = new Carte("brun4", this.liste_famille.get(6), "theme_mort/31_burned.png");
+            Carte p32 = new Carte("brun5", this.liste_famille.get(6), "theme_mort/32_burned.png");
+            Carte p33 = new Carte("brun6", this.liste_famille.get(6), "theme_mort/33_burned.png");
+            Carte p34 = new Carte("brun7", this.liste_famille.get(6), "theme_mort/34_burned.png");
+            Carte p35 = new Carte("brun8", this.liste_famille.get(6), "theme_mort/35_burned.png");
+            this.jeu.add_Carte(p28,28);
+            this.jeu.add_Carte(p29,29);
+            this.jeu.add_Carte(p30,30);
+            this.jeu.add_Carte(p31,31);
+            this.jeu.add_Carte(p32,32);
+            this.jeu.add_Carte(p33,33);
+            this.jeu.add_Carte(p34,34);
+            this.jeu.add_Carte(p35,35);
+
         }
     }
 
@@ -251,13 +364,12 @@ public class Controller {
            }
        }
 
-        vue = new View(this);
+        vue = new View(this, style);
         cb = new ControlButton(vue, this);
     }
 
     public boolean jouer(  int id_joueur ,int cible ){
         //jouer
-        Famille famille_prise = plateau[cible].getFamille(); //besoin pour la suite
         joueurActif = id_joueur;
         boolean fin=false;
         for (int i = 0; i < 36; i++) {
@@ -305,17 +417,19 @@ public class Controller {
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 ///////////////////////////////   verification pour meme famille   ///////////////////////////////////////////
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+                Famille famille_prise = new Famille();
                 if (possibilite.contains(getCarte(cible))){
+                    famille_prise = plateau[cible].getFamille(); //besoin pour la suite
+                    System.out.println(famille_prise.getNom());
                     if (position_init - cible > 0 && (position_init - cible) % 6 == 0) {//on vérifie si le survole mm famille en haut
                         for (int haut = i - 6; haut >= cible+6; haut = haut - 6) {
                             if (haut >= 0) {
                                 if (plateau[haut].getFamille() == plateau[cible].getFamille()) {
                                     joueur.get(id_joueur).point_par_famille[plateau[haut].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[haut].getFamille().getNombre_membre() - 1) + 1;
+                                    plateau[haut].getFamille().mort();
                                     joueur.get(id_joueur).add_Cimetierre(plateau[haut]);
                                     vue.capture_multiple(haut);
                                     plateau[haut] = new Carte("__vide__", null, "lol");
-      //                              plateau[haut].getFamille().mort();
                                 }
                             }
 
@@ -326,10 +440,10 @@ public class Controller {
                             if (bas <= 35){
                                 if (plateau[bas].getFamille() == plateau[cible].getFamille()) {
                                     joueur.get(id_joueur).point_par_famille[plateau[bas].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[bas].getFamille().getNombre_membre() - 1) + 1;
+                                    plateau[bas].getFamille().mort();
                                     joueur.get(id_joueur).add_Cimetierre(plateau[bas]);
                                     vue.capture_multiple(bas);
                                     plateau[bas] = new Carte("__vide__", null, "lol");
-    //                                plateau[bas].getFamille().mort();
                                 }
                             }
 
@@ -340,10 +454,10 @@ public class Controller {
                             if (gauche>= i - i % 6){
                                 if (plateau[gauche].getFamille() == plateau[cible].getFamille()) {
                                     joueur.get(id_joueur).point_par_famille[plateau[gauche].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[gauche].getFamille().getNombre_membre() - 1) + 1;
+                                    plateau[gauche].getFamille().mort();
                                     joueur.get(id_joueur).add_Cimetierre(plateau[gauche]);
                                     vue.capture_multiple(gauche);
                                     plateau[gauche] = new Carte("__vide__", null, "lol");
-  //                                  plateau[gauche].getFamille().mort();
                                 }
                             }
 
@@ -354,10 +468,10 @@ public class Controller {
                             if (droite <= i-i%6+5 ){
                                 if (plateau[droite].getFamille() == plateau[cible].getFamille()) {
                                     joueur.get(id_joueur).point_par_famille[plateau[droite].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[droite].getFamille().getNombre_membre() - 1) + 1;
+                                    plateau[droite].getFamille().mort();
                                     joueur.get(id_joueur).add_Cimetierre(plateau[droite]);
                                     vue.capture_multiple(droite);
                                     plateau[droite] = new Carte("__vide__", null, "lol");
-//                                    plateau[droite].getFamille().mort();
                                 }
                             }
 
@@ -367,7 +481,7 @@ public class Controller {
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     ////////////////////////////  on mange le pion cible et on fiis le tour   ////////////////////////////////////
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+                    System.out.println(famille_prise.getNom());
                     joueur.get(id_joueur).point_par_famille[plateau[cible].getFamille().getNombre_membre()-1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[cible].getFamille().getNombre_membre()-1)+1;
                     //ajout de point par famille
                     joueur.get(id_joueur).add_Cimetierre(plateau[cible]);
@@ -387,10 +501,9 @@ public class Controller {
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 /////////////////////////  Vérification de si famille vide et donc compagon   ////////////////////////////////
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                if (famille_prise.getMembre_vivant() == 0){
 
-//                if (famille_prise.getMembre_vivant() == 0){
-
-  //              }
+                }
             }
         }
 
