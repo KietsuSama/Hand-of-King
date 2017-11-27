@@ -1,5 +1,3 @@
-package src;
-
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -42,6 +40,10 @@ public class HandOfKing extends JFrame {
     public void setCartes(int n, Carte c){
         this.Cartes[n] = null;
         this.Cartes[n] = c;
+    }
+
+    public void removeCompagnon(int i){
+        Carte_de_compagnons.remove(i);
     }
 
 

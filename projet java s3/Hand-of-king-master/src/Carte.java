@@ -1,7 +1,3 @@
-package src;
-
-import src.Famille;
-
 import javax.swing.*;
 import java.awt.*;
 

@@ -1,5 +1,3 @@
-package src;
-
 /**
  * Created by Lucas on 30/10/2017.
  */
@@ -14,8 +12,11 @@ public class Launcher {
         jeu.init_Carte_Compagnon();
         jeu.init_banniere();
         jeu.set_Plateau();
-        int tour_de_jeu = 0;
-        for (int k = 0; k< jeu.plateau.length; k+=6){ //affichega du plateau de base
+  /*
+        jeu.setcompagon();
+*/
+        /*int tour_de_jeu = 0;
+        /*for (int k = 0; k< jeu.plateau.length; k+=6){ //affichega du plateau de base
             System.out.println(jeu.plateau[k].getNom() + "  |  "+jeu.plateau[k+1].getNom()+ "  |  "+jeu.plateau[k+2].getNom()+ "  |  "+jeu.plateau[k+3].getNom()+ "  |  "+jeu.plateau[k+4].getNom()+ "  |  "+jeu.plateau[k+5].getNom());
         }
         while (jeu.getPossibilité() == true){ //tnt qu'il y a des possibilités
@@ -58,5 +59,6 @@ public class Launcher {
         for (int k = 0; k< jeu.plateau.length; k+=6){
             System.out.println(jeu.plateau[k].getNom() + "  |  "+jeu.plateau[k+1].getNom()+ "  |  "+jeu.plateau[k+2].getNom()+ "  |  "+jeu.plateau[k+3].getNom()+ "  |  "+jeu.plateau[k+4].getNom()+ "  |  "+jeu.plateau[k+5].getNom());
         } //affiche une derniere fois le plateau final
+    }*/
     }
 }

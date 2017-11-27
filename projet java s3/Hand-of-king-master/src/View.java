@@ -1,3 +1,7 @@
+
+
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,21 +17,45 @@ public class View extends JFrame {
        JButton imageJ2 = new JButton();
        JButton pseudoJ1 = new JButton();
        JButton pseudoJ2 = new JButton();
-
        JButton[] plateau;
-       ControlButton cb = new ControlButton(this);
+
+       ControlButton cb;
        ArrayList<Carte> tous = new ArrayList<Carte>();
+       Controller mod;
 
 
 
-       public View(Carte[]cartes){
 
+       public View(Controller mod){
+              this.mod=mod;
+              cb  = new ControlButton(this,mod);
               initAttribut();
-              initPlateau(cartes);
+              initPlateau(mod.getPlateau());
               creerPaneau();
               setSize(1000,1000);
               setVisible(true);
               setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       }
+
+       public JButton[] getPlateau() {
+              return plateau;
+       }
+
+       public JButton getPlateau(int i) {
+              return plateau[i];
+       }
+
+
+
+       public void vueCapture(int depart,int cible ){
+              plateau[cible].setIcon(plateau[depart].getIcon());
+              plateau[depart].setIcon(new ImageIcon("pokémon/pokeball.gif"));//la methode sera a modifier pour implementer la prise multiple
+              setVisible(true);
+       }
+       public void pDeplacement(int depart,int cible){
+              plateau[cible].setIcon(plateau[depart].getIcon());//on deplace le pion visuelleemnt
+              plateau[depart].setIcon(null);//on fait en sorte que le depart ne soit pas "capturé"
+              setVisible(true);
        }
 
        public void initAttribut(){
@@ -39,8 +67,6 @@ public class View extends JFrame {
               for (int i =0 ; i<36; i++){
                      plateau[i]= new JButton();
                      plateau[i].setPreferredSize(new Dimension(100,100));
-              }
-              for(int i=0;i<36;i++) {
                      plateau[i].setBackground(Color.white);
               }
 
@@ -50,8 +76,10 @@ public class View extends JFrame {
        public void initPlateau(Carte[] cartes){
               for (int i = 0;i<36;i++ ){
                      plateau[i].setIcon(cartes[i].getIcone());
+                     plateau[i].addActionListener(cb);
               }
        }
+
 
        public void creerPaneau(){
 
@@ -65,6 +93,8 @@ public class View extends JFrame {
               JPanel pan7 = new JPanel();
               JPanel pan8 = new JPanel();
               JPanel pan9 = new JPanel();
+              JPanel pan10= new JPanel();
+              JPanel panel11 = new JPanel();
 
               //pan.setLayout(new GridLayout(3,3));
               pan1.setLayout(new GridLayout(6,6));
@@ -94,6 +124,7 @@ public class View extends JFrame {
               pan8.add(pseudoJ2);
               pan9.add(imageJ2);
 
+
               pan.add(pan6);
               pan.add(pan3);
               pan.add(pan7);
@@ -103,9 +134,14 @@ public class View extends JFrame {
               pan.add(pan8);
               pan.add(pan2);
               pan.add(pan9);
+
+
               setContentPane(pan);
               setVisible(true);
        }
 
 
+       public void capture_multiple(int id) {
+              plateau[id].setIcon(new ImageIcon("pokémon/pokeball.gif"));
+       }
 }

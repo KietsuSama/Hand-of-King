@@ -1,5 +1,3 @@
-package src;
-
 import java.util.ArrayList;
 
 /**
@@ -33,9 +31,11 @@ public class Famille {
     public int getMembre_vivant(){
         return membre_vivant;
     }
-     public Banniere getBanniere(){
+
+    public Banniere getBanniere(){
         return banniere;
      }
+
     public void mort(){
         membre_vivant--;
     }

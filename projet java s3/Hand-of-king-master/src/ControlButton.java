@@ -1,6 +1,8 @@
-package src; /**
+/**
  * Created by Lucas on 30/10/2017.
  */
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,12 +12,19 @@ import java.util.ArrayList;
 public class ControlButton implements ActionListener {
 
     private View view;
+    private Controller modele;
+    int tourj = 0;
+
+
     private ArrayList x=new ArrayList(); //le chemin possible a emprunter
 
 
-    public ControlButton(View v){
+    public ControlButton(View v,Controller modele){
         this.view = v;
+        this.modele=modele;
     }
+
+
 
     public int getPosition(ActionEvent e) {
         int reponse = 0;
@@ -37,7 +46,6 @@ public class ControlButton implements ActionListener {
     }
 
     public void nord(int i){
-
         boucle:
         for (int j = i - 6; j >= 0; j -= 6) {
             for(int p=0;p<12;p++){
@@ -49,11 +57,14 @@ public class ControlButton implements ActionListener {
         }
     }
 
-
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
+        int pos = getPosition(e);
+        System.out.println(pos);
+        JButton jbpos = getJButton(e);
+        boolean valid = modele.jouer(tourj%2, pos);
+        if (valid) tourj++;
+
 
     }
 }
