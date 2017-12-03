@@ -1,8 +1,6 @@
+
 import javax.swing.*;
 
-/**
- * Created by Lucas on 30/10/2017.
- */
 public class CarteCompagnon {
 
     private ImageIcon icone;

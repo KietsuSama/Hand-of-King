@@ -34,7 +34,7 @@ public class Famille {
 
     public Banniere getBanniere(){
         return banniere;
-     }
+    }
 
     public void mort(){
         membre_vivant--;

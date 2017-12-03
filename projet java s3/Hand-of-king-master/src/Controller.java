@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,7 +15,8 @@ public class Controller {
     ArrayList<Joueur> joueur = new ArrayList<>();
     ArrayList<Famille> liste_famille = new ArrayList<Famille>();
     ArrayList<CarteCompagnon> compagnons_set =new ArrayList<CarteCompagnon>();
-    int joueurActif = 0; // 0 ou 1
+    boolean compagnonOk = false;
+
     Carte[] plateau = new Carte[36];
     private int style;
     boolean debut = true;
@@ -73,7 +76,6 @@ public class Controller {
     public void init_Carte(){
         init_Famille();
         if (style == 1){
-            System.out.println("Pokemon");
 
             //pion deplacable
             Carte p0 = new Carte("Red", null , "pokémon/Pion/red.png");
@@ -81,15 +83,15 @@ public class Controller {
             this.jeu.add_Carte(p0, 0);
 
             //membre de la premiere famille
-            Carte p1 = new Carte("Givrali", this.liste_famille.get(0), "pokémon/Glace/givraly.png");
+            Carte p1 = new Carte("Givrali", this.liste_famille.get(0), "pokémon/Glace/givrali.png");
             Carte p2 = new Carte("Lohklass", this.liste_famille.get(0), "pokémon/Glace/lohklass.png");
             this.jeu.add_Carte(p1, 1);
             this.jeu.add_Carte(p2, 2);
 
             //membre de la deuxieme famille
-            Carte p3 = new Carte("Grahyena", this.liste_famille.get(1), "pokémon/Tenèbre/grahyena.jpg");
-            Carte p4 = new Carte("Noctali", this.liste_famille.get(1), "pokémon/Tenèbre/noctaly.png");
-            Carte p5 = new Carte("Tyranocif", this.liste_famille.get(1), "pokémon/Tenèbre/tyranocif.jpg");
+            Carte p3 = new Carte("Grahyena", this.liste_famille.get(1), "pokémon/Tenèbre/grahyena.png");
+            Carte p4 = new Carte("Noctali", this.liste_famille.get(1), "pokémon/Tenèbre/noctali.png");
+            Carte p5 = new Carte("Tyranocif", this.liste_famille.get(1), "pokémon/Tenèbre/tyranocif.png");
             this.jeu.add_Carte(p3,3);
             this.jeu.add_Carte(p4,4);
             this.jeu.add_Carte(p5,5);
@@ -97,19 +99,19 @@ public class Controller {
             //membre de la troisieme famille
             Carte p6 = new Carte("Arcanin", this.liste_famille.get(2), "pokémon/Feu/arcanin.png");
             Carte p7 = new Carte("Dracaufeu", this.liste_famille.get(2), "pokémon/Feu/dracaufeu.png");
-            Carte p8 = new Carte("Poussifeu", this.liste_famille.get(2), "pokémon/Feu/poussifeu.jpg");
-            Carte p9 = new Carte("Pyroli", this.liste_famille.get(2), "pokémon/Feu/pyroli.jpg");
+            Carte p8 = new Carte("Poussifeu", this.liste_famille.get(2), "pokémon/Feu/poussifeu.png");
+            Carte p9 = new Carte("Pyroli", this.liste_famille.get(2), "pokémon/Feu/pyroli.png");
             this.jeu.add_Carte(p6,6);
             this.jeu.add_Carte(p7,7);
             this.jeu.add_Carte(p8,8);
             this.jeu.add_Carte(p9,9);
 
             //membre de la quatrieme famille
-            Carte p10 = new Carte("Elecable", this.liste_famille.get(3), "pokémon/Electrik/elecable.jpg");
-            Carte p11 = new Carte("Luxray", this.liste_famille.get(3), "pokémon/Electrik/luxray.jpg");
-            Carte p12 = new Carte("Pikachu", this.liste_famille.get(3), "pokémon/Electrik/pikachu.jpg");
-            Carte p13 = new Carte("Voltali", this.liste_famille.get(3), "pokémon/Electrik/voltali.jpg");
-            Carte p14 = new Carte("Wattouat", this.liste_famille.get(3), "pokémon/Electrik/wattouat.jpg");
+            Carte p10 = new Carte("Elecable", this.liste_famille.get(3), "pokémon/Electrik/elecable.png");
+            Carte p11 = new Carte("Luxray", this.liste_famille.get(3), "pokémon/Electrik/luxray.png");
+            Carte p12 = new Carte("Pikachu", this.liste_famille.get(3), "pokémon/Electrik/pikachu.png");
+            Carte p13 = new Carte("Voltali", this.liste_famille.get(3), "pokémon/Electrik/voltali.png");
+            Carte p14 = new Carte("Wattouat", this.liste_famille.get(3), "pokémon/Electrik/wattouat.png");
             this.jeu.add_Carte(p10,10);
             this.jeu.add_Carte(p11,11);
             this.jeu.add_Carte(p12,12);
@@ -117,12 +119,12 @@ public class Controller {
             this.jeu.add_Carte(p14,14);
 
             //membre de la cinquieme famille
-            Carte p15 = new Carte("Alakazam", this.liste_famille.get(4), "pokémon/Psy/alakazam.jpg");
+            Carte p15 = new Carte("Alakazam", this.liste_famille.get(4), "pokémon/Psy/alakazam.png");
             Carte p16 = new Carte("Gardevoir", this.liste_famille.get(4), "pokémon/Psy/gardevoir.png");
-            Carte p17 = new Carte("Mr mime", this.liste_famille.get(4), "pokémon/Psy/M_mime.jpg");
+            Carte p17 = new Carte("Mr mime", this.liste_famille.get(4), "pokémon/Psy/M_mime.png");
             Carte p18 = new Carte("Magireve", this.liste_famille.get(4), "pokémon/Psy/magireve.png");
             Carte p19 = new Carte("Mentali", this.liste_famille.get(4), "pokémon/Psy/mentali.png");
-            Carte p20 = new Carte("Qulbutoke", this.liste_famille.get(4), "pokémon/Psy/qulbutoke.jpg");
+            Carte p20 = new Carte("Qulbutoke", this.liste_famille.get(4), "pokémon/Psy/qulbutoke.png");
             this.jeu.add_Carte(p15,15);
             this.jeu.add_Carte(p16,16);
             this.jeu.add_Carte(p17,17);
@@ -132,11 +134,11 @@ public class Controller {
 
             //membre de la sixieme famille
             Carte p21 = new Carte("Chetiflor", this.liste_famille.get(5), "pokémon/Plante/chetiflor.png");
-            Carte p22 = new Carte("Heliatronc", this.liste_famille.get(5), "pokémon/Plante/heliatronc.jpg");
+            Carte p22 = new Carte("Heliatronc", this.liste_famille.get(5), "pokémon/Plante/heliatronc.png");
             Carte p23 = new Carte("Joliflor", this.liste_famille.get(5), "pokémon/Plante/joliflor.png");
             Carte p24 = new Carte("Jungcko", this.liste_famille.get(5), "pokémon/Plante/jungcko.png");
             Carte p25 = new Carte("Noadkoko", this.liste_famille.get(5), "pokémon/Plante/noadkoko.png");
-            Carte p26 = new Carte("Phylali", this.liste_famille.get(5), "pokémon/Plante/phyllali.png");
+            Carte p26 = new Carte("Phylali", this.liste_famille.get(5), "pokémon/Plante/phylalli.png");
             Carte p27 = new Carte("Roserade", this.liste_famille.get(5), "pokémon/Plante/roserade.png");
             this.jeu.add_Carte(p21,21);
             this.jeu.add_Carte(p22,22);
@@ -147,13 +149,13 @@ public class Controller {
             this.jeu.add_Carte(p27,27);
 
             //membre de la septiemme famille
-            Carte p28 = new Carte("Aquali", this.liste_famille.get(6), "pokémon/Eau/aquali.jpg");
+            Carte p28 = new Carte("Aquali", this.liste_famille.get(6), "pokémon/Eau/aquali.png");
             Carte p29 = new Carte("Kokiyas", this.liste_famille.get(6), "pokémon/Eau/kokiyas.png");
-            Carte p30 = new Carte("Laggron", this.liste_famille.get(6), "pokémon/Eau/laggron.jpg");
+            Carte p30 = new Carte("Laggron", this.liste_famille.get(6), "pokémon/Eau/laggron.png");
             Carte p31 = new Carte("Magicarpe", this.liste_famille.get(6), "pokémon/Eau/magicarpe.png");
             Carte p32 = new Carte("Milobellus", this.liste_famille.get(6), "pokémon/Eau/milobellus.png");
-            Carte p33 = new Carte("Sharpedo", this.liste_famille.get(6), "pokémon/Eau/sharpedo.jpg");
-            Carte p34 = new Carte("Stari", this.liste_famille.get(6), "pokémon/Eau/stari.jpg");
+            Carte p33 = new Carte("Sharpedo", this.liste_famille.get(6), "pokémon/Eau/sharpedo.png");
+            Carte p34 = new Carte("Stari", this.liste_famille.get(6), "pokémon/Eau/stari.png");
             Carte p35 = new Carte("Tortank", this.liste_famille.get(6), "pokémon/Eau/tortank.png");
             this.jeu.add_Carte(p28,28);
             this.jeu.add_Carte(p29,29);
@@ -166,7 +168,6 @@ public class Controller {
 
 
         } else if (style == 2){
-            System.out.println("famille");
 
             //pion deplacable
             Carte p0 = new Carte("Mort", null , "theme_mort/36_burned.png");
@@ -269,13 +270,13 @@ public class Controller {
         Banniere b6 = liste_famille.get(5).getBanniere();
         Banniere b7 = liste_famille.get(6).getBanniere();
 
-        jeu.Bannieres.add(b1);
-        jeu.Bannieres.add(b2);
-        jeu.Bannieres.add(b3);
-        jeu.Bannieres.add(b4);
-        jeu.Bannieres.add(b5);
-        jeu.Bannieres.add(b6);
-        jeu.Bannieres.add(b7);
+        jeu.bannieres.add(b1);
+        jeu.bannieres.add(b2);
+        jeu.bannieres.add(b3);
+        jeu.bannieres.add(b4);
+        jeu.bannieres.add(b5);
+        jeu.bannieres.add(b6);
+        jeu.bannieres.add(b7);
     }
 
     public void init_Carte_Compagnon(){
@@ -289,80 +290,90 @@ public class Controller {
         CarteCompagnon c8 = new CarteCompagnon("Compagnon8",7,"lol");
         CarteCompagnon c9 = new CarteCompagnon("Compagnon9",8,"lol");
 
-        jeu.Carte_de_compagnons.add(c1);
-        jeu.Carte_de_compagnons.add(c2);
-        jeu.Carte_de_compagnons.add(c3);
-        jeu.Carte_de_compagnons.add(c4);
-        jeu.Carte_de_compagnons.add(c5);
-        jeu.Carte_de_compagnons.add(c6);
-        jeu.Carte_de_compagnons.add(c7);
-        jeu.Carte_de_compagnons.add(c8);
-        jeu.Carte_de_compagnons.add(c9);
+        jeu.carte_de_compagnons.add(c1);
+        compagnons_set.add(c1);
+        jeu.carte_de_compagnons.add(c2);
+        compagnons_set.add(c2);
+        jeu.carte_de_compagnons.add(c3);
+        compagnons_set.add(c3);
+        jeu.carte_de_compagnons.add(c4);
+        compagnons_set.add(c4);
+        jeu.carte_de_compagnons.add(c5);
+        compagnons_set.add(c5);
+        jeu.carte_de_compagnons.add(c6);
+        compagnons_set.add(c6);
+        jeu.carte_de_compagnons.add(c7);
+        compagnons_set.add(c7);
+        jeu.carte_de_compagnons.add(c8);
+        compagnons_set.add(c8);
+        jeu.carte_de_compagnons.add(c9);
+        compagnons_set.add(c9);
     }
-/*
+
     public void setcompagon(){
+
+
         Random rand = new Random();
 
         int id_compagnon;
         boolean est_vrai = true;
-        while(jeu.Carte_de_compagnons.isEmpty() != true){
-            id_compagnon = rand.nextInt(jeu.Carte_de_compagnons.size());
-            while (jeu.Carte_de_compagnons.get(id_compagnon) == null){
+        while(jeu.carte_de_compagnons.isEmpty() != true){
+            id_compagnon = rand.nextInt(jeu.carte_de_compagnons.size());
+            while (jeu.carte_de_compagnons.get(id_compagnon) == null){
                 id_compagnon++;
                 if (id_compagnon == 9){
                     id_compagnon =0;
                 }
             }
-            compagnons_set.add(jeu.Carte_de_compagnons.get(id_compagnon));
-            jeu.Carte_de_compagnons.remove(jeu.Carte_de_compagnons.get(id_compagnon));
-            System.out.print(id_compagnon);
+            compagnons_set.add(jeu.carte_de_compagnons.get(id_compagnon));
+            jeu.carte_de_compagnons.remove(jeu.carte_de_compagnons.get(id_compagnon));
             //FAIRE UN TABLEAU DES ID COMPGNON DEJA USE POUR NE PAS AVOIR PLS * LES MM
         }
         init_Carte_Compagnon();
     }
-*/
+
     public void init_Joueur(){
-        Joueur j1 = new Joueur();
-        Joueur j2 = new Joueur();
+        Joueur j1 = new Joueur("j1");
+        Joueur j2 = new Joueur("j2");
 
         joueur.add(j1);
         joueur.add(j2);
     }
 
     public void set_Plateau() {
-       Carte[] liste_des_cartes = jeu.getCartes();
-       boolean while_continu = true;
-       Random rand = new Random();
+        Carte[] liste_des_cartes = jeu.getCartes();
+        boolean while_continu = true;
+        Random rand = new Random();
 
-       while (while_continu == true) {
-           int idPlateau = rand.nextInt(35);
-           int idCarte = rand.nextInt(35);
-           while (plateau[idPlateau] != null) {
-               idPlateau++;
-               if (idPlateau > 35) {
-                   idPlateau = 0;
-               }
-           }
-           while (liste_des_cartes[idCarte] == null) {
-               idCarte++;
-               if (idCarte > 35) {
-                   idCarte = 0;
-               }
-           }
-           plateau[idPlateau] = liste_des_cartes[idCarte];
-           liste_des_cartes[idCarte] = null;
-           boolean var = true;
-           for (int i =0; i < 35 ; i++){
-               if (liste_des_cartes[i] != null){
-                   var = false;
-               } else if(plateau[i] == null){
-                   var = false;
-               }
-           }
-           if (var){
-               while_continu = false;
-           }
-       }
+        while (while_continu == true) {
+            int idPlateau = rand.nextInt(35);
+            int idCarte = rand.nextInt(35);
+            while (plateau[idPlateau] != null) {
+                idPlateau++;
+                if (idPlateau > 35) {
+                    idPlateau = 0;
+                }
+            }
+            while (liste_des_cartes[idCarte] == null) {
+                idCarte++;
+                if (idCarte > 35) {
+                    idCarte = 0;
+                }
+            }
+            plateau[idPlateau] = liste_des_cartes[idCarte];
+            liste_des_cartes[idCarte] = null;
+            boolean var = true;
+            for (int i =0; i < 35 ; i++){
+                if (liste_des_cartes[i] != null){
+                    var = false;
+                } else if(plateau[i] == null){
+                    var = false;
+                }
+            }
+            if (var){
+                while_continu = false;
+            }
+        }
 
         vue = new View(this, style);
         cb = new ControlButton(vue, this);
@@ -370,7 +381,7 @@ public class Controller {
 
     public boolean jouer(  int id_joueur ,int cible ){
         //jouer
-        joueurActif = id_joueur;
+        compagnonOk = false;
         boolean fin=false;
         for (int i = 0; i < 36; i++) {
             if (plateau[i].deplacement ) { // on se positionne sur le pion que l'on peut deplacer
@@ -418,11 +429,11 @@ public class Controller {
                 ///////////////////////////////   verification pour meme famille   ///////////////////////////////////////////
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 Famille famille_prise = new Famille();
-                if (possibilite.contains(getCarte(cible))){
+                if (possibilite.contains(getCarte(cible))) {
                     famille_prise = plateau[cible].getFamille(); //besoin pour la suite
-                    System.out.println(famille_prise.getNom());
+
                     if (position_init - cible > 0 && (position_init - cible) % 6 == 0) {//on vérifie si le survole mm famille en haut
-                        for (int haut = i - 6; haut >= cible+6; haut = haut - 6) {
+                        for (int haut = i - 6; haut >= cible + 6; haut = haut - 6) {
                             if (haut >= 0) {
                                 if (plateau[haut].getFamille() == plateau[cible].getFamille()) {
                                     joueur.get(id_joueur).point_par_famille[plateau[haut].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[haut].getFamille().getNombre_membre() - 1) + 1;
@@ -436,8 +447,8 @@ public class Controller {
                         }
                     }
                     if (position_init - cible < 0 && Math.abs((position_init - cible)) % 6 == 0) {//on vérifie si le survole mm famille en bas
-                        for (int bas = i + 6; bas <= cible-6; bas = bas + 6) {
-                            if (bas <= 35){
+                        for (int bas = i + 6; bas <= cible - 6; bas = bas + 6) {
+                            if (bas <= 35) {
                                 if (plateau[bas].getFamille() == plateau[cible].getFamille()) {
                                     joueur.get(id_joueur).point_par_famille[plateau[bas].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[bas].getFamille().getNombre_membre() - 1) + 1;
                                     plateau[bas].getFamille().mort();
@@ -450,8 +461,8 @@ public class Controller {
                         }
                     }
                     if (cible >= i - i % 6 && cible < position_init) {//on vérifie si le survole mm famille en bas
-                        for (int gauche = i - 1; gauche >= cible+1; gauche--) {
-                            if (gauche>= i - i % 6){
+                        for (int gauche = i - 1; gauche >= cible + 1; gauche--) {
+                            if (gauche >= i - i % 6) {
                                 if (plateau[gauche].getFamille() == plateau[cible].getFamille()) {
                                     joueur.get(id_joueur).point_par_famille[plateau[gauche].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[gauche].getFamille().getNombre_membre() - 1) + 1;
                                     plateau[gauche].getFamille().mort();
@@ -464,8 +475,8 @@ public class Controller {
                         }
                     }
                     if (cible > position_init && cible <= i - i % 6 + 5) {//on vérifie si le survole mm famille en bas
-                        for (int droite = i + 1; droite<= cible-1; droite++) {
-                            if (droite <= i-i%6+5 ){
+                        for (int droite = i + 1; droite <= cible - 1; droite++) {
+                            if (droite <= i - i % 6 + 5) {
                                 if (plateau[droite].getFamille() == plateau[cible].getFamille()) {
                                     joueur.get(id_joueur).point_par_famille[plateau[droite].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[droite].getFamille().getNombre_membre() - 1) + 1;
                                     plateau[droite].getFamille().mort();
@@ -481,52 +492,189 @@ public class Controller {
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     ////////////////////////////  on mange le pion cible et on fiis le tour   ////////////////////////////////////
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    System.out.println(famille_prise.getNom());
-                    joueur.get(id_joueur).point_par_famille[plateau[cible].getFamille().getNombre_membre()-1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[cible].getFamille().getNombre_membre()-1)+1;
+
+                    joueur.get(id_joueur).point_par_famille[plateau[cible].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[cible].getFamille().getNombre_membre() - 1) + 1;
                     //ajout de point par famille
                     joueur.get(id_joueur).add_Cimetierre(plateau[cible]);
                     //ajout dans le cimetierre du joueur
                     plateau[cible] = plateau[i];
                     //suppression du plateau
                     plateau[i] = new Carte("__vide__", null, "lol");
-//                    plateau[i].getFamille().mort();
-                    if (debut){ // on regarde si cest le premier tour pour eviter de mettre l image d'une carte capturée sur la case de départ du pion à bouger
-                        vue.pDeplacement(i,cible);
-                        debut=false;
-                    }else vue.vueCapture(i,cible);
-                        return true;
+                    famille_prise.mort();
+                    if (debut) { // on regarde si cest le premier tour pour eviter de mettre l image d'une carte capturée sur la case de départ du pion à bouger
+                        vue.pDeplacement(i, cible);
+                        debut = false;
+                    } else vue.vueCapture(i, cible);
 
-                }
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    /////////////////////////  Vérification de si famille vide et donc compagon   ////////////////////////////////
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                /////////////////////////  Vérification de si famille vide et donc compagon   ////////////////////////////////
-                //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if (famille_prise.getMembre_vivant() == 0){
+                    if (famille_prise.getMembre_vivant() == 0){
+
+                        compagnonOk=true;
+                        switch (compagnons_set.get(0).id){
+                            case 0:
+                                javax.swing.JOptionPane.showMessageDialog(null,"Vous pouvez detruire une carte de votre choix !");
+                                break;
+                            case 1:
+                            if (style == 1) {
+                                    javax.swing.JOptionPane.showMessageDialog(null, "Si givraly n'était pas capturé, il est à vous !");
+                                } else {
+                                    javax.swing.JOptionPane.showMessageDialog(null, "Si la femme au cheveux blanc n'était pas morte, elle est à vous !");
+                                }
+                                break;
+                            case 2:
+                            if (style == 1) {
+                                    javax.swing.JOptionPane.showMessageDialog(null, "Si Alakazam n'était pas capturé, il est à vous !");
+                                } else {
+                                    javax.swing.JOptionPane.showMessageDialog(null, "Si le premier homme noir n'était pas mort, il est à vous !");
+                                }
+                                break;
+                            case 3:
+                            if (style == 1) {
+                                    javax.swing.JOptionPane.showMessageDialog(null, "Vous avez ajouter un joker de type electrique a vos capture !");
+                                } else {
+                                    javax.swing.JOptionPane.showMessageDialog(null, "Vous avez fauchez un joker de la famille roux !");
+                                }
+                                break;
+                            case 4:
+                            if (style == 1) {
+                                    javax.swing.JOptionPane.showMessageDialog(null, "Si vous avez Noctali, il vaux deux points !");
+                                } else {
+                                    javax.swing.JOptionPane.showMessageDialog(null, "Si vous avez la femme aux cheveux vert et au serre tete rouge, elle vaux 2 points !");
+                                }
+                                break;
+                            case 5:
+                            if (style == 1) {
+                                    javax.swing.JOptionPane.showMessageDialog(null, "Vous capturez Noadekoko si il était encore sauvage !");
+                                } else {
+                                    javax.swing.JOptionPane.showMessageDialog(null, "Vous fauchez la femme blonde aux yeux verts si elle ne l'était pas !");
+                                }
+                            break;
+                            case 6:
+                                if (style == 1) {
+                                        javax.swing.JOptionPane.showMessageDialog(null, "Vous un joker de la famille feu qui vaux deux points !");
+                                    } else {
+                                        javax.swing.JOptionPane.showMessageDialog(null, "Vous fauchez un joker de la famille chauve qui vaux deux points !");
+                                    }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    /////////////////////////  Vérification des possibilités ( fin de jeu )    ///////////////////////////////////
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                    if (getPossibilité() == false){
+                        javax.swing.JOptionPane.showMessageDialog(null,"Fin de jeu !");
+                        return false;
+                    }
 
                 }
             }
         }
 
-        return false;
+        return true;
     }
 
-    /*
-     public void effetCompagnon(int num) {
-         switch (this.jeu.getCarte_de_compagnons().get(num).effet) {
-             default:
-                 break;
-         }
-         //effet n°1 : detruit une carte du jeu
-         //effet n°2 : tue un personnage du jeu en particulier
-         //effet n°3 : switch les places de deux cartes
-         // effet n°4 : ajoute une carte de la famille au choix dans la liste de manger
-         //effet n°5 : si tu a un personnage precis du jeu dans ton manger, il compte deux points
-         //effet n°6 : pioche deux copmpagnon, joue en un et deffause l'autre
-         //effet n°7 : joue un nouveau tour
-         //effet n°8 : choisi entre deux personnage precis et les enleve du jeu
-         //effet n°9 : declarer une famille et deviens une carte qui compte 2 pour cette familler
-     }
-     */
+
+    public int effetCompagnon(int id_joueur ,int num,int cible) {
+
+        if(plateau[cible].getFamille() == null){
+            return 1;
+        }
+        compagnonOk = false;
+        switch (num) {
+            case 0 :
+                //effet n°1 : detruit une carte du jeu
+                System.out.println("1");
+                vue.capture_multiple(cible);
+                plateau[cible].getFamille().mort();
+                plateau[cible] = new Carte("__vide__", null, "lol");
+                compagnons_set.remove(0);
+                break;
+            case 1 :
+                System.out.println("2");
+                //effet n°2 : tue le membre 1 de la famille 1
+                for(int y = 0; y < 35; y++){
+                    if(plateau[y].getNom() == "Givrali" || plateau[y].getNom() == "blanc1"){
+                        joueur.get(id_joueur).point_par_famille[plateau[y].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[y].getFamille().getNombre_membre() - 1) + 1;
+                        joueur.get(id_joueur).add_Cimetierre(plateau[y]);
+                        vue.capture_multiple(y);
+                        plateau[y].getFamille().mort();
+                        plateau[y] = new Carte("__vide__", null, "lol");
+                    }
+                }
+                compagnons_set.remove(0);
+                break;
+            case 2 :
+                System.out.println("3");
+                //effet n°2 : tue le membre 1 de la famille 5
+                for(int y = 0; y < 35; y++){
+                    if(plateau[y].getNom() == "black1" || plateau[y].getNom() == "Alakazam"){
+                        joueur.get(id_joueur).point_par_famille[plateau[y].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[y].getFamille().getNombre_membre() - 1) + 1;
+                        joueur.get(id_joueur).add_Cimetierre(plateau[y]);
+                        vue.capture_multiple(y);
+                        plateau[y].getFamille().mort();
+                        plateau[y] = new Carte("__vide__", null, "lol");
+                    }
+                }
+                compagnons_set.remove(0);
+                break;
+
+            case 3 :
+                System.out.println("4");
+                // effet n°4 : ajoute une carte de la famille 4 dans la liste de manger
+                Carte joker4 = new Carte("Joker", this.liste_famille.get(3), "lol.png");
+                joueur.get(id_joueur).point_par_famille[liste_famille.get(3).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(3).getNombre_membre() - 1) + 1;
+                joueur.get(id_joueur).add_Cimetierre(joker4);
+                compagnons_set.remove(0);
+                break;
+
+            case 4 :
+                System.out.println("5");
+                //effet n°5 : si tu a le 2eme membre de la 2eme famille dans ton manger, il compte deux points
+                for ( int w = 0; w < joueur.get(id_joueur).getCimetierre().size() ; w++){
+                    if(joueur.get(id_joueur).getCimetierre().get(w).getNom() == "vert2" || joueur.get(id_joueur).getCimetierre().get(w).getNom() == "Noctali" ){
+                        joueur.get(id_joueur).point_par_famille[liste_famille.get(1).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(1).getNombre_membre() - 1) + 1;
+                    }
+                }
+                compagnons_set.remove(0);
+                break;
+
+            case 5 :
+                System.out.println("6");
+                //effet n°7 : : tue le membre 5 de la famille 6
+                for(int y = 0; y < 35; y++){
+                    if(plateau[y].getNom() == "Noadkoko" || plateau[y].getNom() == "blond5"){
+                        joueur.get(id_joueur).point_par_famille[plateau[y].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[y].getFamille().getNombre_membre() - 1) + 1;
+                        joueur.get(id_joueur).add_Cimetierre(plateau[y]);
+                        vue.capture_multiple(y);
+                        plateau[y].getFamille().mort();
+                        plateau[y] = new Carte("__vide__", null, "lol");
+                    }
+                }
+                compagnons_set.remove(0);
+                break;
+
+            case 6 :
+                System.out.println("7");
+                //effet n°8 : creer une carte et deviens une carte qui compte 2 pour la famille 3
+                Carte joker3 = new Carte("Joker", this.liste_famille.get(2), "lol.png");
+                joueur.get(id_joueur).point_par_famille[liste_famille.get(2).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(2).getNombre_membre() - 1) + 1;
+                joueur.get(id_joueur).point_par_famille[liste_famille.get(2).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(2).getNombre_membre() - 1) + 1;
+                joueur.get(id_joueur).add_Cimetierre(joker3);
+                compagnons_set.remove(0);
+                break;
+            default:
+                break;
+        }
+        return 0;
+    }
+
 
 
     public boolean getPossibilité(){
