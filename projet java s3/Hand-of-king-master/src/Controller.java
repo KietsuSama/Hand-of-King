@@ -340,6 +340,93 @@ public class Controller {
         joueur.add(j2);
     }
 
+    public int effetCompagnon(int id_joueur ,int num,int cible) {
+
+        if(plateau[cible].getFamille() == null){
+            return 1;
+        }
+        compagnonOk = false;
+        switch (num) {
+            case 0 :
+                //effet n°1 : detruit une carte du jeu
+                vue.capture_multiple(cible);
+                plateau[cible].getFamille().mort();
+                plateau[cible] = new Carte("__vide__", null, "lol");
+                compagnons_set.remove(0);
+                break;
+            case 1 :
+                //effet n°2 : tue le membre 1 de la famille 1
+                for(int y = 0; y < 35; y++){
+                    if(plateau[y].getNom() == "Givrali" || plateau[y].getNom() == "blanc1"){
+                        joueur.get(id_joueur).point_par_famille[plateau[y].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[y].getFamille().getNombre_membre() - 1) + 1;
+                        joueur.get(id_joueur).add_Cimetierre(plateau[y]);
+                        vue.capture_multiple(y);
+                        plateau[y].getFamille().mort();
+                        plateau[y] = new Carte("__vide__", null, "lol");
+                    }
+                }
+                compagnons_set.remove(0);
+                break;
+            case 2 :
+                //effet n°2 : tue le membre 1 de la famille 5
+                for(int y = 0; y < 35; y++){
+                    if(plateau[y].getNom() == "black1" || plateau[y].getNom() == "Alakazam"){
+                        joueur.get(id_joueur).point_par_famille[plateau[y].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[y].getFamille().getNombre_membre() - 1) + 1;
+                        joueur.get(id_joueur).add_Cimetierre(plateau[y]);
+                        vue.capture_multiple(y);
+                        plateau[y].getFamille().mort();
+                        plateau[y] = new Carte("__vide__", null, "lol");
+                    }
+                }
+                compagnons_set.remove(0);
+                break;
+
+            case 3 :
+                // effet n°4 : ajoute une carte de la famille 4 dans la liste de manger
+                Carte joker4 = new Carte("Joker", this.liste_famille.get(3), "lol.png");
+                joueur.get(id_joueur).point_par_famille[liste_famille.get(3).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(3).getNombre_membre() - 1) + 1;
+                joueur.get(id_joueur).add_Cimetierre(joker4);
+                compagnons_set.remove(0);
+                break;
+
+            case 4 :
+                //effet n°5 : si tu a le 2eme membre de la 2eme famille dans ton manger, il compte deux points
+                for ( int w = 0; w < joueur.get(id_joueur).getCimetierre().size() ; w++){
+                    if(joueur.get(id_joueur).getCimetierre().get(w).getNom() == "vert2" || joueur.get(id_joueur).getCimetierre().get(w).getNom() == "Noctali" ){
+                        joueur.get(id_joueur).point_par_famille[liste_famille.get(1).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(1).getNombre_membre() - 1) + 1;
+                    }
+                }
+                compagnons_set.remove(0);
+                break;
+
+            case 5 :
+                //effet n°7 : : tue le membre 5 de la famille 6
+                for(int y = 0; y < 35; y++){
+                    if(plateau[y].getNom() == "Noadkoko" || plateau[y].getNom() == "blond5"){
+                        joueur.get(id_joueur).point_par_famille[plateau[y].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[y].getFamille().getNombre_membre() - 1) + 1;
+                        joueur.get(id_joueur).add_Cimetierre(plateau[y]);
+                        vue.capture_multiple(y);
+                        plateau[y].getFamille().mort();
+                        plateau[y] = new Carte("__vide__", null, "lol");
+                    }
+                }
+                compagnons_set.remove(0);
+                break;
+
+            case 6 :
+                //effet n°8 : creer une carte et deviens une carte qui compte 2 pour la famille 3
+                Carte joker3 = new Carte("Joker", this.liste_famille.get(2), "lol.png");
+                joueur.get(id_joueur).point_par_famille[liste_famille.get(2).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(2).getNombre_membre() - 1) + 1;
+                joueur.get(id_joueur).point_par_famille[liste_famille.get(2).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(2).getNombre_membre() - 1) + 1;
+                joueur.get(id_joueur).add_Cimetierre(joker3);
+                compagnons_set.remove(0);
+                break;
+            default:
+                break;
+        }
+        return 0;
+    }
+
     public void set_Plateau() {
         Carte[] liste_des_cartes = jeu.getCartes();
         boolean while_continu = true;
@@ -378,6 +465,76 @@ public class Controller {
         vue = new View(this, style);
         cb = new ControlButton(vue, this);
     }
+
+    public Joueur compte_point_famille( Joueur j1, Joueur j2, int famille){
+        int[] pointJ1 = j1.getPoint_par_famille();
+        int[] pointJ2 = j2.getPoint_par_famille();
+        if (pointJ1[famille] > pointJ2[famille]) {
+            return j1;
+        } else if (pointJ1[famille] < pointJ2[famille]){
+            return j2;
+        } else {
+            return null;
+        }
+    }
+
+    public void compte_point_des_joueurs(Joueur j1, Joueur j2){
+        for (int i =0; i < liste_famille.size(); i++){
+            if (compte_point_famille(j1,j2,i) == j1){
+                j1.add_Banniere(jeu.getBannieres().get(i));
+                System.out.println("j1");
+            } else if (compte_point_famille(j1,j2,i) == j2){
+                System.out.println("j2");
+                j2.add_Banniere(jeu.getBannieres().get(i));
+            } else if (compte_point_famille(j1,j2,i) == null) {
+                System.out.println("egalite");
+                j1.add_Banniere(jeu.getBannieres().get(i));
+                j2.add_Banniere(jeu.getBannieres().get(i));
+            }
+        }
+    }
+
+    public boolean getPossibilité(){
+        boolean retour = false;
+        for (int i = 0; i < 36; i++) {
+            if (plateau[i].deplacement) {
+                ArrayList<String> possibilité = new ArrayList<String>();
+                for (int haut = i - 6; haut >= 0; haut = haut - 6) {//prend les possibilités du dessus
+                    if (plateau[haut].getNom() != "__vide__") {
+                        possibilité.add(plateau[haut].getNom());
+
+                    }
+                }
+
+                for (int bas = i + 6; bas <= 35; bas = bas + 6) {//prend les possibilités du dessous
+                    if (plateau[bas].getNom() != "__vide__") {
+                        possibilité.add(plateau[bas].getNom());
+
+                    }
+                }
+
+                for (int droite = i + 1; droite < i - i % 6 + 6; droite++) {//prend les possibilités a droite
+                    if (plateau[droite].getNom() != "__vide__") {
+                        possibilité.add(plateau[droite].getNom());
+
+                    }
+                }
+
+                for (int gauche = i - 1; gauche >= i - i % 6; gauche--) {//prend les possibilités a gauche
+                    if (plateau[gauche].getNom() != "__vide__") {
+                        possibilité.add(plateau[gauche].getNom());
+
+                    }
+                }
+                if (possibilité.size() != 0){
+                    retour = true;
+                }
+            }
+        }
+        return retour;
+    }
+
+
 
     public boolean jouer(  int id_joueur ,int cible ){
         //jouer
@@ -492,7 +649,7 @@ public class Controller {
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     ////////////////////////////  on mange le pion cible et on fiis le tour   ////////////////////////////////////
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+                    System.out.println(joueur.get(id_joueur).getNom());
                     joueur.get(id_joueur).point_par_famille[plateau[cible].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[cible].getFamille().getNombre_membre() - 1) + 1;
                     //ajout de point par famille
                     joueur.get(id_joueur).add_Cimetierre(plateau[cible]);
@@ -521,7 +678,7 @@ public class Controller {
                             if (style == 1) {
                                     javax.swing.JOptionPane.showMessageDialog(null, "Si givraly n'était pas capturé, il est à vous !");
                                 } else {
-                                    javax.swing.JOptionPane.showMessageDialog(null, "Si la femme au cheveux blanc n'était pas morte, elle est à vous !");
+                                    javax.swing.JOptionPane.showMessageDialog(null, "Si l'homme à la barbe blanche n'était pas mort, il est à vous !");
                                 }
                                 break;
                             case 2:
@@ -569,152 +726,25 @@ public class Controller {
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     if (getPossibilité() == false){
-                        javax.swing.JOptionPane.showMessageDialog(null,"Fin de jeu !");
+                        javax.swing.JOptionPane.showMessageDialog(null,"Fin de jeu ! Maintenant on compte les points...");
+                        compte_point_des_joueurs(joueur.get(0), joueur.get(1));
+
+                        if (joueur.get(0).getPoint() > joueur.get(1).getPoint()){
+                            javax.swing.JOptionPane.showMessageDialog(null,"Et c'est le joueur 1 qui as le plus de points ! bravo ! ^u^");
+
+                        } else if (joueur.get(0).getPoint() < joueur.get(1).getPoint()) {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Et c'est le joueur 2 qui as le plus de points ! bravo ! *o*");
+
+                        } else {
+                            javax.swing.JOptionPane.showMessageDialog(null, "C'est une parfaite égalité ! O-O");
+                        }
                         return false;
                     }
 
                 }
             }
         }
-
         return true;
-    }
-
-
-    public int effetCompagnon(int id_joueur ,int num,int cible) {
-
-        if(plateau[cible].getFamille() == null){
-            return 1;
-        }
-        compagnonOk = false;
-        switch (num) {
-            case 0 :
-                //effet n°1 : detruit une carte du jeu
-                System.out.println("1");
-                vue.capture_multiple(cible);
-                plateau[cible].getFamille().mort();
-                plateau[cible] = new Carte("__vide__", null, "lol");
-                compagnons_set.remove(0);
-                break;
-            case 1 :
-                System.out.println("2");
-                //effet n°2 : tue le membre 1 de la famille 1
-                for(int y = 0; y < 35; y++){
-                    if(plateau[y].getNom() == "Givrali" || plateau[y].getNom() == "blanc1"){
-                        joueur.get(id_joueur).point_par_famille[plateau[y].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[y].getFamille().getNombre_membre() - 1) + 1;
-                        joueur.get(id_joueur).add_Cimetierre(plateau[y]);
-                        vue.capture_multiple(y);
-                        plateau[y].getFamille().mort();
-                        plateau[y] = new Carte("__vide__", null, "lol");
-                    }
-                }
-                compagnons_set.remove(0);
-                break;
-            case 2 :
-                System.out.println("3");
-                //effet n°2 : tue le membre 1 de la famille 5
-                for(int y = 0; y < 35; y++){
-                    if(plateau[y].getNom() == "black1" || plateau[y].getNom() == "Alakazam"){
-                        joueur.get(id_joueur).point_par_famille[plateau[y].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[y].getFamille().getNombre_membre() - 1) + 1;
-                        joueur.get(id_joueur).add_Cimetierre(plateau[y]);
-                        vue.capture_multiple(y);
-                        plateau[y].getFamille().mort();
-                        plateau[y] = new Carte("__vide__", null, "lol");
-                    }
-                }
-                compagnons_set.remove(0);
-                break;
-
-            case 3 :
-                System.out.println("4");
-                // effet n°4 : ajoute une carte de la famille 4 dans la liste de manger
-                Carte joker4 = new Carte("Joker", this.liste_famille.get(3), "lol.png");
-                joueur.get(id_joueur).point_par_famille[liste_famille.get(3).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(3).getNombre_membre() - 1) + 1;
-                joueur.get(id_joueur).add_Cimetierre(joker4);
-                compagnons_set.remove(0);
-                break;
-
-            case 4 :
-                System.out.println("5");
-                //effet n°5 : si tu a le 2eme membre de la 2eme famille dans ton manger, il compte deux points
-                for ( int w = 0; w < joueur.get(id_joueur).getCimetierre().size() ; w++){
-                    if(joueur.get(id_joueur).getCimetierre().get(w).getNom() == "vert2" || joueur.get(id_joueur).getCimetierre().get(w).getNom() == "Noctali" ){
-                        joueur.get(id_joueur).point_par_famille[liste_famille.get(1).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(1).getNombre_membre() - 1) + 1;
-                    }
-                }
-                compagnons_set.remove(0);
-                break;
-
-            case 5 :
-                System.out.println("6");
-                //effet n°7 : : tue le membre 5 de la famille 6
-                for(int y = 0; y < 35; y++){
-                    if(plateau[y].getNom() == "Noadkoko" || plateau[y].getNom() == "blond5"){
-                        joueur.get(id_joueur).point_par_famille[plateau[y].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[y].getFamille().getNombre_membre() - 1) + 1;
-                        joueur.get(id_joueur).add_Cimetierre(plateau[y]);
-                        vue.capture_multiple(y);
-                        plateau[y].getFamille().mort();
-                        plateau[y] = new Carte("__vide__", null, "lol");
-                    }
-                }
-                compagnons_set.remove(0);
-                break;
-
-            case 6 :
-                System.out.println("7");
-                //effet n°8 : creer une carte et deviens une carte qui compte 2 pour la famille 3
-                Carte joker3 = new Carte("Joker", this.liste_famille.get(2), "lol.png");
-                joueur.get(id_joueur).point_par_famille[liste_famille.get(2).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(2).getNombre_membre() - 1) + 1;
-                joueur.get(id_joueur).point_par_famille[liste_famille.get(2).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(2).getNombre_membre() - 1) + 1;
-                joueur.get(id_joueur).add_Cimetierre(joker3);
-                compagnons_set.remove(0);
-                break;
-            default:
-                break;
-        }
-        return 0;
-    }
-
-
-
-    public boolean getPossibilité(){
-        boolean retour = false;
-        for (int i = 0; i < 36; i++) {
-            if (plateau[i].deplacement) {
-                ArrayList<String> possibilité = new ArrayList<String>();
-                for (int haut = i - 6; haut >= 0; haut = haut - 6) {//prend les possibilités du dessus
-                    if (plateau[haut].getNom() != "__vide__") {
-                        possibilité.add(plateau[haut].getNom());
-
-                    }
-                }
-
-                for (int bas = i + 6; bas <= 35; bas = bas + 6) {//prend les possibilités du dessous
-                    if (plateau[bas].getNom() != "__vide__") {
-                        possibilité.add(plateau[bas].getNom());
-
-                    }
-                }
-
-                for (int droite = i + 1; droite < i - i % 6 + 6; droite++) {//prend les possibilités a droite
-                    if (plateau[droite].getNom() != "__vide__") {
-                        possibilité.add(plateau[droite].getNom());
-
-                    }
-                }
-
-                for (int gauche = i - 1; gauche >= i - i % 6; gauche--) {//prend les possibilités a gauche
-                    if (plateau[gauche].getNom() != "__vide__") {
-                        possibilité.add(plateau[gauche].getNom());
-
-                    }
-                }
-                if (possibilité.size() != 0){
-                    retour = true;
-                }
-            }
-        }
-        return retour;
     }
 
 }
