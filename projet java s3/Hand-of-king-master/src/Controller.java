@@ -538,6 +538,9 @@ public class Controller {
 
     public boolean jouer(  int id_joueur ,int cible ){
         //jouer
+        if (plateau[cible].getFamille() == null){
+            return false;
+        }
         compagnonOk = false;
         boolean fin=false;
         for (int i = 0; i < 36; i++) {
