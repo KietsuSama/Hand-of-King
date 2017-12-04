@@ -15,13 +15,8 @@ public class View extends JFrame {
        JButton pseudoJ2 = new JButton();
        JButton[] plateau;
        int style;
-
        ControlButton cb;
-       ArrayList<Carte> tous = new ArrayList<Carte>();
        Controller mod;
-
-
-
 
        public View(Controller mod, int i){
               style = i;
@@ -35,16 +30,6 @@ public class View extends JFrame {
               setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        }
 
-       public JButton[] getPlateau() {
-              return plateau;
-       }
-
-       public JButton getPlateau(int i) {
-              return plateau[i];
-       }
-
-
-
        public void vueCapture(int depart,int cible ){
               plateau[cible].setIcon(plateau[depart].getIcon());
               if (style == 1) {
@@ -54,6 +39,7 @@ public class View extends JFrame {
               }
               setVisible(true);
        }
+
        public void pDeplacement(int depart,int cible){
               plateau[cible].setIcon(plateau[depart].getIcon());//on deplace le pion visuelleemnt
               plateau[depart].setIcon(null);//on fait en sorte que le depart ne soit pas "capturé"
@@ -78,13 +64,13 @@ public class View extends JFrame {
               setVisible(true);
 
        }
+
        public void initPlateau(Carte[] cartes){
               for (int i = 0;i<36;i++ ){
                      plateau[i].setIcon(cartes[i].getIcone());
                      plateau[i].addActionListener(cb);
               }
        }
-
 
        public void creerPaneau(){
 
@@ -131,6 +117,12 @@ public class View extends JFrame {
                      pseudoJ2.setIcon(new ImageIcon("pokémon/pseudo.jpeg"));
               }
 
+              pseudoJ2.setEnabled(false);
+              imageJ2.setEnabled(false);
+              cimetierre.setEnabled(false);
+              cimetierre2.addActionListener(cb);
+              cimetierre3.addActionListener(cb);
+
               pan2.add(cimetierre);
               pan3.add(cimetierre1);
               pan4.add(cimetierre2);
@@ -156,12 +148,49 @@ public class View extends JFrame {
               setVisible(true);
        }
 
-
        public void capture_multiple(int id) {
               if (style == 1) {
                      plateau[id].setIcon(new ImageIcon("pokémon/pokeball.gif"));//la methode sera a modifier pour implementer la prise multiple
               } else if (style == 2){
                      plateau[id].setIcon(new ImageIcon("theme_mort/kill.png"));//la methode sera a modifier pour implementer la prise multiple
               }
+       }
+
+       public void creerCimetiereJ1() {
+              JFrame f = new JFrame();
+              f.setTitle("cimetierre Joueur 1");
+              f.setSize(500,500);
+              JPanel panel_cimetierre = new JPanel();
+              panel_cimetierre.setLayout(new GridLayout(3,7));
+              JLabel [] cimetierre = new JLabel[mod.joueur.get(0).getCimetierre().size()];
+              for (int k = 0; k < mod.joueur.get(0).getCimetierre().size(); k++) {
+                     JLabel lol = new JLabel();
+                     lol.setIcon(mod.joueur.get(0).getCimetierre().get(k).getIcone());
+                     cimetierre[k] = lol;
+                     panel_cimetierre.add(cimetierre[k]);
+              }
+              f.setBackground(Color.black);
+              f.add(panel_cimetierre);
+              f.setContentPane(panel_cimetierre);
+              f.setVisible(true);
+       }
+
+       public void creerCimetiereJ2() {
+              JFrame f = new JFrame();
+              f.setTitle("cimetierre Joueur 2");
+              f.setSize(500,500);
+              JPanel panel_cimetierre = new JPanel();
+              panel_cimetierre.setLayout(new GridLayout(3,7));
+              JLabel [] cimetierre = new JLabel[mod.joueur.get(1).getCimetierre().size()];
+              for (int k = 0; k < mod.joueur.get(1).getCimetierre().size(); k++) {
+                     JLabel lol = new JLabel();
+                     lol.setIcon(mod.joueur.get(1).getCimetierre().get(k).getIcone());
+                     cimetierre[k] = lol;
+                     panel_cimetierre.add(cimetierre[k]);
+              }
+              f.setBackground(Color.black);
+              f.add(panel_cimetierre);
+              f.setContentPane(panel_cimetierre);
+              f.setVisible(true);
        }
 }

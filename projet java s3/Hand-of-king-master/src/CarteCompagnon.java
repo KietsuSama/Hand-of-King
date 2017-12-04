@@ -12,8 +12,4 @@ public class CarteCompagnon {
         this.icone = new ImageIcon(nom_de_limage);
         this.id = effet;
     }
-
-    public CarteCompagnon(){}
-
-
 }

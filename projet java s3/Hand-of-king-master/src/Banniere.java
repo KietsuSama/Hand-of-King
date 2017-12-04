@@ -11,11 +11,6 @@ public class Banniere {
         this.points=points;
     }
 
-    public Banniere(){}
-
-    public Famille getFamille() {
-        return famille;
-    }
     public int getPoints() {
         return points;
     }

@@ -24,6 +24,20 @@ public class Controller {
 
     public Controller(){}
 
+    public void explication(int i){
+        if (i == 1){
+            javax.swing.JOptionPane.showMessageDialog(null, "Les rêgles sont simple, vous pouvez à tour de rôle déplacer Red pour capturer des pokémons. Celui qui as le plus de membres de la même famille gagne donc des points équivalent au nombres de membres de cette famille. Mais atention !");
+            javax.swing.JOptionPane.showMessageDialog(null, "Il y  quelques subtilités ! lors ce qu'une famille à entierement disparu du plateau de jeu, un effet se produit pour celui qui as capturer le dernier pokémon de cette famille !");
+            javax.swing.JOptionPane.showMessageDialog(null, "Une dernière chose, vous pouvez capturer plusieurs pokémons du même type si, lors de votre trajectoire vous passez sur un ou plusieurs pokémon de même type que celui que vous capturez !");
+            javax.swing.JOptionPane.showMessageDialog(null, "Et aussi, Red ne peut être déplacé uniquement de manière verticale ou horizontale. Amusez vous bien !");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(null, "Les rêgles sont simple, vous pouvez à tour de rôle déplacer La mort pour faucher des gens. Celui qui as le plus de membres de la même famille gagne donc des points équivalent au nombres de membres de cette famille. Mais atention !");
+            javax.swing.JOptionPane.showMessageDialog(null, "Il y  quelques subtilités ! lors ce qu'une famille à entierement disparu du plateau de jeu, un effet se produit pour celui qui as fauché le dernier membre de cette famille !");
+            javax.swing.JOptionPane.showMessageDialog(null, "Une dernière chose, vous pouvez faucher plusieurs personnes du même type si, lors de votre trajectoire vous passez sur une ou plusieurs personne de même type que celui que vous fauchz !");
+            javax.swing.JOptionPane.showMessageDialog(null, "Et aussi, La mort ne peut être déplacé uniquement de manière verticale ou horizontale. Amusez vous bien !");
+        }
+    }
+
     public void initStyle(int i){
         style = i;
     }
@@ -383,7 +397,12 @@ public class Controller {
 
             case 3 :
                 // effet n°4 : ajoute une carte de la famille 4 dans la liste de manger
-                Carte joker4 = new Carte("Joker", this.liste_famille.get(3), "lol.png");
+                Carte joker4;
+                if (style == 1) {
+                    joker4 = new Carte("Joker", this.liste_famille.get(3), "pokémon/Joker-Noir3.png");
+                } else {
+                    joker4 = new Carte("Joker", this.liste_famille.get(3), "theme_mort/Joker-Noir.png");
+                }
                 joueur.get(id_joueur).point_par_famille[liste_famille.get(3).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(3).getNombre_membre() - 1) + 1;
                 joueur.get(id_joueur).add_Cimetierre(joker4);
                 compagnons_set.remove(0);
@@ -415,7 +434,12 @@ public class Controller {
 
             case 6 :
                 //effet n°8 : creer une carte et deviens une carte qui compte 2 pour la famille 3
-                Carte joker3 = new Carte("Joker", this.liste_famille.get(2), "lol.png");
+                Carte joker3;
+                if (style == 1) {
+                    joker3 = new Carte("Joker", this.liste_famille.get(3), "pokémon/Joker-Noir2.png");
+                } else {
+                    joker3 = new Carte("Joker", this.liste_famille.get(3), "theme_mort/Joker-Noir4.png");
+                }
                 joueur.get(id_joueur).point_par_famille[liste_famille.get(2).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(2).getNombre_membre() - 1) + 1;
                 joueur.get(id_joueur).point_par_famille[liste_famille.get(2).getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(liste_famille.get(2).getNombre_membre() - 1) + 1;
                 joueur.get(id_joueur).add_Cimetierre(joker3);
@@ -482,12 +506,9 @@ public class Controller {
         for (int i =0; i < liste_famille.size(); i++){
             if (compte_point_famille(j1,j2,i) == j1){
                 j1.add_Banniere(jeu.getBannieres().get(i));
-                System.out.println("j1");
             } else if (compte_point_famille(j1,j2,i) == j2){
-                System.out.println("j2");
                 j2.add_Banniere(jeu.getBannieres().get(i));
             } else if (compte_point_famille(j1,j2,i) == null) {
-                System.out.println("egalite");
                 j1.add_Banniere(jeu.getBannieres().get(i));
                 j2.add_Banniere(jeu.getBannieres().get(i));
             }
@@ -534,12 +555,25 @@ public class Controller {
         return retour;
     }
 
-
-
-    public boolean jouer(  int id_joueur ,int cible ){
+    public boolean jouer(int id_joueur ,int cible){
         //jouer
         if (plateau[cible].getFamille() == null){
             return false;
+        }
+        if(joueur.get(id_joueur).getNom() == "j1"){
+            vue.pseudoJ1.setEnabled(false);
+            vue.imageJ1.setEnabled(false);
+            vue.cimetierre1.setEnabled(false);
+            vue.pseudoJ2.setEnabled(true);
+            vue.imageJ2.setEnabled(true);
+            vue.cimetierre.setEnabled(true);
+        } else {
+            vue.pseudoJ2.setEnabled(false);
+            vue.imageJ2.setEnabled(false);
+            vue.cimetierre.setEnabled(false);
+            vue.pseudoJ1.setEnabled(true);
+            vue.imageJ1.setEnabled(true);
+            vue.cimetierre1.setEnabled(true);
         }
         compagnonOk = false;
         boolean fin=false;
@@ -652,7 +686,6 @@ public class Controller {
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     ////////////////////////////  on mange le pion cible et on fiis le tour   ////////////////////////////////////
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    System.out.println(joueur.get(id_joueur).getNom());
                     joueur.get(id_joueur).point_par_famille[plateau[cible].getFamille().getNombre_membre() - 1] = joueur.get(id_joueur).getPoint_emplacement_famille(plateau[cible].getFamille().getNombre_membre() - 1) + 1;
                     //ajout de point par famille
                     joueur.get(id_joueur).add_Cimetierre(plateau[cible]);
@@ -670,7 +703,7 @@ public class Controller {
                     /////////////////////////  Vérification de si famille vide et donc compagon   ////////////////////////////////
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                    if (famille_prise.getMembre_vivant() == 0){
+                    if (famille_prise.getMembre_vivant() == 0 && getPossibilité()){
 
                         compagnonOk=true;
                         switch (compagnons_set.get(0).id){
@@ -728,18 +761,18 @@ public class Controller {
                     /////////////////////////  Vérification des possibilités ( fin de jeu )    ///////////////////////////////////
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                    if (getPossibilité() == false){
+                    if (!getPossibilité()){
                         javax.swing.JOptionPane.showMessageDialog(null,"Fin de jeu ! Maintenant on compte les points...");
                         compte_point_des_joueurs(joueur.get(0), joueur.get(1));
 
                         if (joueur.get(0).getPoint() > joueur.get(1).getPoint()){
-                            javax.swing.JOptionPane.showMessageDialog(null,"Et c'est le joueur 1 qui as le plus de points ! bravo ! ^u^");
+                            javax.swing.JOptionPane.showMessageDialog(null,"Et c'est le joueur 1 qui as le plus de points ! bravo !   Le joueur 1 à "+joueur.get(0).getPoint()+" points ! Tandis que le joueur 2 en a "+joueur.get(1).getPoint()+" !");
 
                         } else if (joueur.get(0).getPoint() < joueur.get(1).getPoint()) {
-                            javax.swing.JOptionPane.showMessageDialog(null, "Et c'est le joueur 2 qui as le plus de points ! bravo ! *o*");
+                            javax.swing.JOptionPane.showMessageDialog(null,"Et c'est le joueur 2 qui as le plus de points ! bravo !   Le joueur 1 à "+joueur.get(0).getPoint()+" points ! Tandis que le joueur 2 en a "+joueur.get(1).getPoint()+" !");
 
                         } else {
-                            javax.swing.JOptionPane.showMessageDialog(null, "C'est une parfaite égalité ! O-O");
+                            javax.swing.JOptionPane.showMessageDialog(null, "C'est une parfaite égalité ! Les deux joueurs ont "+joueur.get(0).getPoint()+" points !");
                         }
                         return false;
                     }

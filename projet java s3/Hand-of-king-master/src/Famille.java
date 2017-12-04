@@ -20,10 +20,6 @@ public class Famille {
 
     public Famille(){}
 
-    public String getNom() {
-        return nom;
-    }
-
     public int getNombre_membre(){
         return nombre_membre;
     }

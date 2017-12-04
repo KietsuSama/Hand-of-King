@@ -8,13 +8,8 @@ public class Carte extends JPanel {
 
     private ImageIcon icone;
     private Famille famille;
-    int position;
     private String nom;
     boolean deplacement = false;
-
-    public Carte(){}
-
-
 
     public Carte(String nom, Famille famille, String nom_de_limage){
         this.nom = nom;
@@ -26,13 +21,8 @@ public class Carte extends JPanel {
         this.deplacement = oui;
     }
 
-
     public ImageIcon getIcone() {
         return icone;
-    }
-
-    public void setPos(int x){
-        this.position=x;
     }
 
     public Famille getFamille(){

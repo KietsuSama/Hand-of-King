@@ -22,7 +22,6 @@ public class ControlButton implements ActionListener {
         this.modele = modele;
     }
 
-
     public int getPosition(ActionEvent e) {
         int reponse = 0;
         for (int i = 0; i < 36; i++) {//parcours toutes les cases...
@@ -33,40 +32,27 @@ public class ControlButton implements ActionListener {
         return reponse;//...alors je la retourne
     }
 
-    private JButton getJButton(ActionEvent e) {
-        for (int i = 0; i < 36; i++) {//meme principe que au dessus
-            if (e.getSource() == view.plateau[i]) {
-                return view.plateau[i];
-            }
-        }
-        return null;
-    }
-
-    public void nord(int i) {
-        boucle:
-        for (int j = i - 6; j >= 0; j -= 6) {
-            for (int p = 0; p < 12; p++) {
-                if (view.tous.get(p).position == j) {
-                    break boucle;
-                }
-            }
-            x.add(j);
-        }
-    }
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (modele.compagnonOk) {
-            if(modele.effetCompagnon(tourj % 2, modele.compagnons_set.get(0).id, getPosition(e)) == 0){
-                tourj++;
-            }
+        if ((JButton)e.getSource() == view.cimetierre2){
+            //creer une fenetre qui affiche le cimetierre j1
+            view.creerCimetiereJ1();
+
+        } else if ((JButton)e.getSource() == view.cimetierre3){
+            //creer une fenetre qui affiche le cimetierre j2
+            view.creerCimetiereJ2();
         } else {
-            int pos = getPosition(e);
-            boolean valid = modele.jouer(tourj % 2, pos);
-            if (valid) {
-                if (!modele.compagnonOk) {
+            if (modele.compagnonOk) {
+                if (modele.effetCompagnon(tourj % 2, modele.compagnons_set.get(0).id, getPosition(e)) == 0) {
                     tourj++;
+                }
+            } else {
+                int pos = getPosition(e);
+                boolean valid = modele.jouer(tourj % 2, pos);
+                if (valid) {
+                    if (!modele.compagnonOk) {
+                        tourj++;
+                    }
                 }
             }
         }

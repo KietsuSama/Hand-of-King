@@ -21,10 +21,6 @@ public class Joueur {
         return cimetierre;
     }
 
-    public ArrayList<Banniere> getBanniere(){
-        return liste_banniere;
-    }
-
     public void add_Cimetierre(Carte c){
         this.cimetierre.add(c);
         int num = (c.getFamille().getNombre_membre())-2;
@@ -44,13 +40,7 @@ public class Joueur {
         return point_par_famille[i];
     }
 
-    public ArrayList<Banniere> getListe_banniere() {
-        return liste_banniere;
-    }
-
     public String getNom() {
         return nom;
     }
-
-
 }
